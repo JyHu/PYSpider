@@ -34,9 +34,9 @@ import os
 
 class baseSpider:
 
-	charset_pat = r'<meta.*?charset=[\"\']?(.*?)[\"\']>'
+	charset_pat = r'<meta.*?charset=[\"\']*(.*?)[\"\']>'
 
-	def __init__(self, root_path, charset = 'utf-8'):
+	def __init__(self, root_path, charset = ''):
 		self.root_path = root_path
 		self.charset = charset
 		self.make_folder(root_path)
@@ -47,16 +47,24 @@ class baseSpider:
 	# re_pat	正则表达式
 	def load_web_page(self, page_url, re_pat):
 		if self.fortest: print page_url, '\n', re_pat
+		text = self.load_web_source(page_url)
+		if len(text) > 0: return re.compile(re_pat).findall(text)
+		else: return []
+
+	def load_web_source(self, page_url):
+		if self.fortest: print page_url
 		r = requests.get(page_url)
 		if r.status_code == 200:
-			cs = re.compile(self.charset_pat).findall(r.content)
-			if cs[0] and len(cs[0]) > 0: self.charset = cs[0]
+			if self.charset == '':
+				cs = re.compile(self.charset_pat).findall(r.content)
+				self.charset = 'utf-8'
+				if len(cs) > 0 : 
+					if len(cs[0]) > 0 : self.charset = cs[0]
 			syscode = sys.getfilesystemencoding()
 			text = r.content.decode(self.charset, 'ignore').encode(syscode)
 			if self.fortest and len(text) > 0: print '成功获取页面内容\n'
-			return re.compile(re_pat).findall(text)
-		else:
-			return []
+			return text
+		return ''
 
 	# 创建一个文件夹，避免重建
 	def make_folder(self, folder_path):
@@ -75,7 +83,7 @@ class baseSpider:
 	def replace_white_space(self, text):
 		text = re.sub(r'<(BR|br)>', '\n', text)	# 替换html中的br换行符
 		text = re.sub(r'<.*?>', '', text)		# 替换穿插在法律内容中的html标签对
-		text = re.sub(r'&nbsp;', '', text)		# 替换html中的空白字符
+		text = re.sub(r'(&nbsp;|&rdquo;|&hellip;|&ldquo;|&mdash;)', '', text)		# 替换html中的空白字符
 		if len(text.strip()) == 0:
 			return ""
 		return text.strip()

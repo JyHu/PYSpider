@@ -10,8 +10,8 @@
 # http://www.xiexingcun.com/cihai/index.html	辞海
 # 
 
-
-
+# http://www.storychina.cn/frmBestStoryType.aspx?ID=2	故事会里的具体内容
+# <div\s+class=\"main_txt\">([\s\S.]*?)</div>
 
 
 

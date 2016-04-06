@@ -72,8 +72,8 @@ class poem_spider(baseSpider):
 		poem_path = ("%s/%s.txt" % (auth_folder, re.sub(r'/', '·', poem[1].strip())))
 		if not self.check_file_exists(poem_path):	# 如果文件不存在，再去请求作品的内容，这样可以节省时间
 			detail_list = self.load_web_page("%s%s" % (self.basePoemsURL, poem[0].strip()), self.detail_pat)
-			print poem_path
 			if len(detail_list) > 0:
+				print poem_path
 				poem_detail = ''
 				for detail in detail_list:		# 遍历所有匹配的内容，然后拼接成一首完整的诗的内容
 					poem_detail += detail[1]
