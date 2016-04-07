@@ -39,6 +39,7 @@ class joke(baseSpider):
 			categories_list = re.compile(self.categoriesPat).findall(categories_str[0])
 			if len(categories_list) > 0:
 				for category in categories_list:
+					if category[1] == '/lengxiaohua/' or category[1] == '/youmo/': continue
 					page_next = category[0]
 					category_path = "%s/%s" % (self.base_folder, category[1].strip())
 					self.make_folder(category_path)
@@ -52,9 +53,10 @@ class joke(baseSpider):
 										joke_path = "%s/%s.txt" % (category_path, joke[1].strip())
 										if not self.check_file_exists(joke_path):
 											joke_detail = self.load_web_page("%s%s" % (self.baseJokeURL, joke[0]), self.jokeDetailPat)
-											print joke_path
-											with open(joke_path, 'w') as f:
-												f.write(self.replace_white_space(joke_detail[0]))
+											if len(joke_detail) > 0:
+												print joke_path
+												with open(joke_path, 'w') as f:
+													f.write(self.replace_white_space(joke_detail[0]))
 						next_find = re.compile(self.nextpagePat).findall(joke_list_html)
 						if len(next_find) > 0 and len(next_find[0]) > 0:
 							page_next = next_find[0]
