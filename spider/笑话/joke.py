@@ -64,3 +64,28 @@ class joke(baseSpider):
 if __name__ == '__main__':
 	j = joke('Joke')
 
+
+'''
+error
+
+
+Joke/爱情/匿名情书.txt
+爱情 /aiqing/27.html
+Joke/爱情/媒人说媒.txt
+Joke/爱情/暗号&nbsp;.txt
+Joke/爱情/座位&nbsp;.txt
+Joke/爱情/可以让她再怀上.txt
+Joke/爱情/好意思吗.txt
+Joke/爱情/爱情宣言.txt
+Joke/爱情/圆的哲学.txt
+Joke/爱情/送一朵玫瑰.txt
+Joke/爱情/三个字.txt
+Traceback (most recent call last):
+  File "joke.py", line 65, in <module>
+    j = joke('Joke')
+  File "joke.py", line 34, in __init__
+    self.load_categories_list()
+  File "joke.py", line 57, in load_categories_list
+    f.write(self.replace_white_space(joke_detail[0]))
+IndexError: list index out of range
+'''
