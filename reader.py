@@ -59,7 +59,8 @@ def read_with_path(path):
 
 def show_item_detail(sub_files, index, path):
 	if len(sub_files) > 0 and len(sub_files) > index and index >= 0:
-		print '\n当前第[%d]个' % index
+		print '\n', path
+		print '当前第[%d]个' % index
 		with open("%s/%s" % (path, sub_files[index])) as f:
 			print '\n', '*' * 40, '\n\n', sub_files[index], '\n\n', f.read(), '\n\n'
 		return index
