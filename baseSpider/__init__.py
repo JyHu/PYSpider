@@ -89,6 +89,9 @@ class baseSpider:
 			return ""
 		return text.strip()
 
+	def path_clean(self, path):
+		return re.sub(r'/', '·', self.replace_white_space(path))
+
 	def error_message(self, msg):
 		sep_line = "*" * 60
 		err = "\n%s\n\n%s\n\n%s\n" % (sep_line, msg, sep_line)

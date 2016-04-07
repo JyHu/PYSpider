@@ -39,28 +39,33 @@ class joke(baseSpider):
 			categories_list = re.compile(self.categoriesPat).findall(categories_str[0])
 			if len(categories_list) > 0:
 				for category in categories_list:
-					page_next = category[0]
-					category_path = "%s/%s" % (self.base_folder, category[1].strip())
-					self.make_folder(category_path)
-					while True:
-						joke_list_html = self.load_web_source("%s%s" % (self.baseJokeURL, page_next))
-						if len(joke_list_html) > 0:
-							jokes_list = re.compile(self.jokesListPat).findall(joke_list_html)
-							if len(jokes_list) > 0:
-								for joke in jokes_list:
-									if len(joke) >= 2:
-										joke_path = "%s/%s.txt" % (category_path, joke[1].strip())
-										if not self.check_file_exists(joke_path):
-											joke_detail = self.load_web_page("%s%s" % (self.baseJokeURL, joke[0]), self.jokeDetailPat)
-											if len(joke_detail) > 0:
-												print joke_path
-												with open(joke_path, 'w') as f:
-													f.write(self.replace_white_space(joke_detail[0]))
-						next_find = re.compile(self.nextpagePat).findall(joke_list_html)
-						if len(next_find) > 0 and len(next_find[0]) > 0:
-							page_next = next_find[0]
-							print category[1].strip(), page_next
-						else: break
+					self.load_jokes(category)
+					
+	def load_jokes(self, category):
+		page_next = category[0]
+		category_path = "%s/%s" % (self.base_folder, category[1].strip())
+		self.make_folder(category_path)
+		while True:
+			joke_list_html = self.load_web_source("%s%s" % (self.baseJokeURL, page_next))
+			if len(joke_list_html) > 0:
+				jokes_list = re.compile(self.jokesListPat).findall(joke_list_html)
+				if len(jokes_list) > 0:
+					for joke in jokes_list:
+						if len(joke) >= 2:
+							joke_path = "%s/%s.txt" % (category_path, self.path_clean(joke[1]))
+							if not self.check_file_exists(joke_path):
+								joke_detail = self.load_web_page("%s%s" % (self.baseJokeURL, joke[0]), self.jokeDetailPat)
+								if len(joke_detail) > 0:
+									print joke_path
+									with open(joke_path, 'w') as f:
+										f.write(self.replace_white_space(joke_detail[0]))
+			next_find = re.compile(self.nextpagePat).findall(joke_list_html)
+			if len(next_find) > 0 and len(next_find[0]) > 0:
+				page_next = next_find[0]
+				print category[1].strip(), page_next
+			else: break
+
+
 
 if __name__ == '__main__':
 	j = joke('Joke')
