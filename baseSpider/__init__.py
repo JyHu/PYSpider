@@ -84,7 +84,7 @@ class baseSpider:
 		if not text : return ''
 		text = re.sub(r'<(BR|br)>', '\n', text)	# 替换html中的br换行符
 		text = re.sub(r'<.*?>', '', text)		# 替换穿插在法律内容中的html标签对
-		text = re.sub(r'(&nbsp;|&rdquo;|&hellip;|&ldquo;|&mdash;)', '', text)		# 替换html中的空白字符
+		text = re.sub(r'(&nbsp;|&rdquo;|&hellip;|&ldquo;|&mdash;|&lt;)', '', text)		# 替换html中的空白字符
 		if len(text.strip()) == 0:
 			return ""
 		return text.strip()

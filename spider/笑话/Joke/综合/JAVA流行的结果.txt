@@ -1,0 +1,1 @@
+INTEL：上帝呀，他们居然改在任天堂游戏机芯片上运行windows！IBM：嘻嘻，我们在仓库里找到一台1969年的大型机，它居然很好的运行了微软的java-word字处理！APPLE：PC？我们的mactionsh是更好的java-pc！MICROSOFT：我们的下一个操作系统将改用java编写，它只要1GHZ主频的cpu，1GB的内存，1TB的硬盘，就能非常非常快速的运行我们的java-windows！SUN：我们的新口号是：Mabyeintelinside，mustjavaoutside!
