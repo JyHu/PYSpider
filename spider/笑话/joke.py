@@ -39,7 +39,6 @@ class joke(baseSpider):
 			categories_list = re.compile(self.categoriesPat).findall(categories_str[0])
 			if len(categories_list) > 0:
 				for category in categories_list:
-					if category[1] == '/lengxiaohua/' or category[1] == '/youmo/': continue
 					page_next = category[0]
 					category_path = "%s/%s" % (self.base_folder, category[1].strip())
 					self.make_folder(category_path)
