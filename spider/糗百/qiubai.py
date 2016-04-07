@@ -26,9 +26,17 @@ class qiubai(baseSpider):
 			qb_list = re.compile(self.qb_pat).findall(qb_html)
 			qb_next = re.compile(self.qb_npat).findall(qb_html)
 			for qb in qb_list:
+				print '\n'
+				print '********************'
+				print '*     我是糗百     *'
+				print '********************'
 				print '\n\n', self.replace_white_space(qb), '\n'
 				print '*' * 40
-				raw_input('\n\n输入任何字符或者回车，查看下一条 ~ ')
+				command = raw_input('\n\n输入任何字符或者回车，查看下一条 ~ ')
+				if command == '\'':
+					os.system('clear')
+					while raw_input('') == '\'':
+						os.system('clear')
 				os.system('clear')
 			if len(qb_next) > 0:
 				self.load_qiubai("%s%s" % (self.qb_url, qb_next[0]))
